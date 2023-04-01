@@ -1,0 +1,28 @@
+name: Sample App deploy
+
+on:
+  workflow_dispatch:
+
+env:
+  AZURE_WEBAPP_NAME: "webapp-lt"
+  LOAD_TEST_RESOURCE: "lt001"
+  LOAD_TEST_RESOURCE_GROUP: "rg_lt"
+  AZURE_WEBAPP_PACKAGE_PATH: '.'     
+  NODE_VERSION: '14.15.1'
+  LOCATION: "westeurope"
+  APPINSIGHTLOCATION: "westeurope"
+  DATABASEACCOUNTLOCATION: "westeurope"
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout GitHub Actions 
+        uses: actions/checkout@v2
+        
+      - name: Login to Azure
+        uses: azure/login@v1
+        continue-on-error: false
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
